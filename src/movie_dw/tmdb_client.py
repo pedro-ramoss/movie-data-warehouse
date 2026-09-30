@@ -4,22 +4,26 @@ import requests
 
 load_dotenv()
 api_key = os.getenv("TMDB_API_TOKEN")
-   
-
-
-url = "https://api.themoviedb.org/3/movie/550"
 
 headers = {
     "Authorization": f"Bearer {api_key}"
-}
+}   
 
-resposta = requests.get(url, headers=headers, timeout=10)
+def get_movie(movie_id):
+    url = f"https://api.themoviedb.org/3/movie/{movie_id}"
+    
+    resposta = requests.get(
+        url,
+        headers=headers,
+        timeout=10)
 
-print(resposta.status_code)
+    resposta.raise_for_status()
 
-dados = resposta.json()
+    return resposta.json()
 
+if __name__ == "__main__":
+    filme = get_movie(550)
 
-print("ID:", dados["id"])
-print("Título:", dados["title"])
-print("Data de lançamento:", dados["release_date"])
+    print("ID:", filme["id"])
+    print("Título:", filme["title"])
+    print("Data:", filme["release_date"])
