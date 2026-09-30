@@ -21,9 +21,37 @@ def get_movie(movie_id):
 
     return resposta.json()
 
-if __name__ == "__main__":
-    filme = get_movie(550)
+def get_popular_movies(page=1):
+    url = "https://api.themoviedb.org/3/movie/popular"
 
-    print("ID:", filme["id"])
-    print("Título:", filme["title"])
-    print("Data:", filme["release_date"])
+    params = {
+        "page": page
+    }
+
+    resposta = requests.get(
+        url,
+        headers=headers,
+        params=params,
+        timeout=10
+    )
+
+    resposta.raise_for_status()
+
+    return resposta.json()
+
+def get_popular_movie_ids(limit=100):
+    ids = []
+    page = 1
+
+    while len(ids) < limit:
+        dados = get_popular_movies(page)
+
+        for filme in dados["results"]:
+            ids.append(filme["id"])
+
+            if len(ids) >= limit:
+                break
+
+        page += 1
+
+    return ids
