@@ -76,3 +76,35 @@ Happy modeling!
 [0m19:53:50.798519 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7bac53e95480>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7bac538c79b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7bac538b5d00>]}
 [0m19:53:50.798859 [debug] [MainThread]: Flushing usage events
 [0m19:53:52.505365 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m20:11:52.166127 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ef0ee05de80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ef0efea4910>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ef0ec853890>]}
+
+
+============================== 20:11:52.169620 | d609283f-4322-4b8e-b645-b7acf52ea28d ==============================
+[0m20:11:52.169620 [info ] [MainThread]: Running with dbt=1.12.5
+[0m20:11:52.170182 [debug] [MainThread]: running dbt with arguments {'debug': 'False', 'version_check': 'True', 'hints_enabled': 'True', 'profiles_dir': '/home/pedro/.dbt', 'cache_selected_only': 'False', 'use_colors': 'True', 'static_parser': 'True', 'no_print': 'None', 'introspect': 'True', 'log_cache_events': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'write_json': 'True', 'printer_width': '80', 'empty': 'False', 'indirect_selection': 'eager', 'maximum_seed_size_mib': '1', 'send_anonymous_usage_stats': 'True', 'warn_error': 'None', 'log_format': 'default', 'log_path': 'logs', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'quiet': 'False', 'target_path': 'None', 'invocation_command': 'dbt run', 'use_experimental_parser': 'False'}
+[0m20:11:52.170730 [error] [MainThread]: [[31mERROR[0m]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/pedro/movie-data-warehouse/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m20:11:52.171697 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.08819156, "process_in_blocks": "10784", "process_kernel_time": 0.083086, "process_mem_max_rss": "118892", "process_out_blocks": "8", "process_user_time": 1.220267}
+[0m20:11:52.172244 [debug] [MainThread]: Command `dbt run` failed at 20:11:52.172126 after 0.09 seconds
+[0m20:11:52.172619 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ef0eca87100>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ef0ec9dbe30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7ef0ec914270>]}
+[0m20:11:52.173000 [debug] [MainThread]: Flushing usage events
+[0m20:11:54.527994 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m20:11:56.100052 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f9394a4de80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f93968a0a50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f9393243890>]}
+
+
+============================== 20:11:56.102896 | d1b2504a-c445-4f8c-8099-e0e8a8a2b86e ==============================
+[0m20:11:56.102896 [info ] [MainThread]: Running with dbt=1.12.5
+[0m20:11:56.103394 [debug] [MainThread]: running dbt with arguments {'hints_enabled': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'log_cache_events': 'False', 'debug': 'False', 'warn_error': 'None', 'introspect': 'True', 'empty': 'None', 'static_parser': 'True', 'invocation_command': 'dbt test', 'use_colors': 'True', 'write_json': 'True', 'printer_width': '80', 'partial_parse': 'True', 'no_print': 'None', 'log_path': 'logs', 'indirect_selection': 'eager', 'quiet': 'False', 'log_format': 'default', 'use_experimental_parser': 'False', 'send_anonymous_usage_stats': 'True', 'cache_selected_only': 'False', 'maximum_seed_size_mib': '1', 'target_path': 'None', 'profiles_dir': '/home/pedro/.dbt', 'version_check': 'True', 'fail_fast': 'False'}
+[0m20:11:56.103871 [error] [MainThread]: [[31mERROR[0m]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/pedro/movie-data-warehouse/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m20:11:56.104670 [debug] [MainThread]: Resource report: {"command_name": "test", "command_success": false, "command_wall_clock_time": 0.08286373, "process_in_blocks": "0", "process_kernel_time": 0.076864, "process_mem_max_rss": "118876", "process_out_blocks": "8", "process_user_time": 1.21885}
+[0m20:11:56.105101 [debug] [MainThread]: Command `dbt test` failed at 20:11:56.104995 after 0.08 seconds
+[0m20:11:56.105421 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f9393477100>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f93933cbe30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f9393304270>]}
+[0m20:11:56.105758 [debug] [MainThread]: Flushing usage events
+[0m20:11:58.860988 [debug] [MainThread]: An error was encountered while trying to flush usage events
