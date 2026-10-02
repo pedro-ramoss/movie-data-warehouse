@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: movies
+    columns:
+      - name: id
+        data_tests:
+          - not_null
+          - unique
+
+      - name: title
+        data_tests:
+          - not_null
+
+      - name: original_language
+        data_tests:
+          - not_null

@@ -1,0 +1,78 @@
+[0m19:51:44.670809 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7bac5546de80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7bac572b0a50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7bac53e03890>]}
+
+
+============================== 19:51:44.673861 | 1f43a2a9-586f-469d-b49b-81dab690c2e9 ==============================
+[0m19:51:44.673861 [info ] [MainThread]: Running with dbt=1.12.5
+[0m19:51:44.674413 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'use_colors': 'True', 'profiles_dir': '/home/pedro/.dbt', 'use_experimental_parser': 'False', 'warn_error': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'no_print': 'None', 'partial_parse': 'True', 'indirect_selection': 'eager', 'hints_enabled': 'True', 'target_path': 'None', 'invocation_command': 'dbt init movie_dw_dbt', 'cache_selected_only': 'False', 'log_path': 'logs', 'log_cache_events': 'False', 'quiet': 'False', 'introspect': 'True', 'debug': 'False', 'send_anonymous_usage_stats': 'True', 'log_format': 'default', 'maximum_seed_size_mib': '1', 'version_check': 'True', 'write_json': 'True', 'empty': 'None', 'printer_width': '80', 'fail_fast': 'False'}
+[0m19:51:44.682958 [info ] [MainThread]: Creating dbt configuration folder at /home/pedro/.dbt
+[0m19:51:44.684129 [debug] [MainThread]: Starter project path: /home/pedro/movie-data-warehouse/.venv/lib/python3.14/site-packages/dbt/include/starter_project
+[0m19:51:44.686368 [info ] [MainThread]: Setting up your profile.
+[0m19:53:50.560808 [info ] [MainThread]: Profile movie_dw_dbt written to /home/pedro/.dbt/profiles.yml using target's profile_template.yml and your supplied values.
+[0m19:53:50.562342 [info ] [MainThread]: Running dbt debug to validate the project...
+[0m19:53:50.563075 [info ] [MainThread]: dbt version: 1.12.5
+[0m19:53:50.563533 [info ] [MainThread]: python version: 3.14.4
+[0m19:53:50.563850 [info ] [MainThread]: python path: /home/pedro/movie-data-warehouse/.venv/bin/python3
+[0m19:53:50.564143 [info ] [MainThread]: os info: Linux-7.0.0-34-generic-x86_64-desconhecido-with-glibc2.43
+[0m19:53:50.590141 [info ] [MainThread]: Using profiles dir at /home/pedro/.dbt
+[0m19:53:50.590567 [info ] [MainThread]: Using profiles.yml file at /home/pedro/.dbt/profiles.yml
+[0m19:53:50.590861 [info ] [MainThread]: Using dbt_project.yml file at /home/pedro/movie-data-warehouse/movie_dw_dbt/dbt_project.yml
+[0m19:53:50.591338 [info ] [MainThread]: adapter type: postgres
+[0m19:53:50.591667 [info ] [MainThread]: adapter version: 1.11.0
+[0m19:53:50.700536 [info ] [MainThread]: Configuration:
+[0m19:53:50.700933 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m19:53:50.701229 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m19:53:50.701503 [info ] [MainThread]: Required dependencies:
+[0m19:53:50.701804 [debug] [MainThread]: Executing "git --help"
+[0m19:53:50.703689 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Set `HEAD` or the index to a known state\n   switch     Switch branches\n   tag        Create, list, delete or verify tags\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m19:53:50.704100 [debug] [MainThread]: STDERR: "b''"
+[0m19:53:50.704440 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m19:53:50.704731 [info ] [MainThread]: Connection:
+[0m19:53:50.705022 [info ] [MainThread]:   host: localhost
+[0m19:53:50.705306 [info ] [MainThread]:   port: 5432
+[0m19:53:50.705575 [info ] [MainThread]:   user: pedro
+[0m19:53:50.705843 [info ] [MainThread]:   database: movie_dw
+[0m19:53:50.706152 [info ] [MainThread]:   schema: silver
+[0m19:53:50.706424 [info ] [MainThread]:   connect_timeout: 10
+[0m19:53:50.706692 [info ] [MainThread]:   role: None
+[0m19:53:50.706955 [info ] [MainThread]:   search_path: None
+[0m19:53:50.707228 [info ] [MainThread]:   keepalives_idle: 0
+[0m19:53:50.707494 [info ] [MainThread]:   sslmode: None
+[0m19:53:50.707821 [info ] [MainThread]:   sslcert: None
+[0m19:53:50.708096 [info ] [MainThread]:   sslkey: None
+[0m19:53:50.708363 [info ] [MainThread]:   sslrootcert: None
+[0m19:53:50.708626 [info ] [MainThread]:   application_name: dbt
+[0m19:53:50.708931 [info ] [MainThread]:   autocommit: False
+[0m19:53:50.709214 [info ] [MainThread]:   retries: 1
+[0m19:53:50.709629 [info ] [MainThread]: Registered adapter: postgres=1.11.0
+[0m19:53:50.760700 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m19:53:50.781962 [debug] [MainThread]: Using postgres connection "debug"
+[0m19:53:50.782377 [debug] [MainThread]: On debug: select 1 as id
+[0m19:53:50.782670 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m19:53:50.794371 [debug] [MainThread]: SQL status: SELECT 1 in 0.012 seconds
+[0m19:53:50.795175 [debug] [MainThread]: On debug: Close
+[0m19:53:50.795494 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m19:53:50.795806 [info ] [MainThread]: [32mAll checks passed![0m
+[0m19:53:50.796142 [info ] [MainThread]: Your new dbt project "movie_dw_dbt" was created!
+Initialized new project in /home/pedro/movie-data-warehouse/movie_dw_dbt/movie_dw_dbt
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m19:53:50.797462 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 126.21587, "process_in_blocks": "128", "process_kernel_time": 0.269892, "process_mem_max_rss": "138088", "process_out_blocks": "88", "process_user_time": 1.483407}
+[0m19:53:50.797907 [debug] [MainThread]: Command `dbt init` succeeded at 19:53:50.797814 after 126.22 seconds
+[0m19:53:50.798205 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m19:53:50.798519 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7bac53e95480>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7bac538c79b0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7bac538b5d00>]}
+[0m19:53:50.798859 [debug] [MainThread]: Flushing usage events
+[0m19:53:52.505365 [debug] [MainThread]: An error was encountered while trying to flush usage events
