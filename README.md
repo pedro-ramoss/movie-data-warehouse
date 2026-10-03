@@ -1,7 +1,7 @@
 # 🎬 Movie Data Warehouse
 
 <p align="center">
-  End-to-end Data Engineering pipeline for collecting, storing, transforming, testing and orchestrating movie data from the TMDB API.
+  Pipeline de Engenharia de Dados ponta a ponta para coleta, armazenamento, transformação, validação e orquestração de dados de filmes utilizando a API do TMDB.
 </p>
 
 <p align="center">
@@ -15,56 +15,56 @@
 
 ---
 
-## 📌 Overview
+## 📌 Visão Geral
 
-Movie Data Warehouse is an end-to-end batch Data Engineering project designed to simulate a production-oriented data pipeline.
+O **Movie Data Warehouse** é um projeto de Engenharia de Dados que simula um pipeline batch utilizado em um ambiente empresarial.
 
-The pipeline extracts movie data from the TMDB API, stores the original responses in a Bronze layer, loads structured data into PostgreSQL, transforms the data through Silver and Gold layers using dbt, validates data quality and orchestrates the complete workflow with Apache Airflow.
+O pipeline coleta dados de filmes através da API do TMDB, armazena as respostas originais em uma camada Bronze, carrega os dados estruturados em PostgreSQL, realiza transformações através das camadas Silver e Gold utilizando dbt, executa testes de qualidade e orquestra todo o processo com Apache Airflow.
 
-The project focuses on concepts commonly used in Data Engineering environments:
+O projeto utiliza conceitos como:
 
-- API ingestion
-- Batch processing
-- Raw data storage
-- ELT pipelines
+- Ingestão de APIs
+- Processamento batch
+- ELT
 - PostgreSQL
-- Medallion architecture
-- Data quality
-- Dimensional modeling
-- Pipeline orchestration
-- Metadata tracking
-- Failure handling
-- Automated testing
-- Idempotent loading
-- Containerized infrastructure
-- Version control
+- Arquitetura Bronze / Silver / Gold
+- Data Warehouse
+- Modelagem dimensional
+- Qualidade de dados
+- Metadata de cargas
+- Tratamento de falhas
+- Testes automatizados
+- Idempotência
+- Orquestração de pipelines
+- Containerização
+- Git e GitHub
 
 ---
 
-## 🏗️ Architecture
+# 🏗️ Arquitetura
 
 ```mermaid
 flowchart TD
     A[TMDB API] --> B[Python / Requests]
-    B --> C[Bronze Layer - Raw JSON]
+    B --> C[Bronze - JSON Bruto]
     C --> D[Python / psycopg]
     D --> E[PostgreSQL - Staging]
     E --> F[dbt]
-    F --> G[Silver Layer]
+    F --> G[Silver]
     G --> H[dbt]
-    H --> I[Gold Layer]
-    I --> J[Analytics Models]
+    H --> I[Gold]
+    I --> J[Modelos Analíticos]
 
     K[Apache Airflow] --> B
     K --> D
     K --> F
 
     L[pytest] --> B
-    M[dbt Tests] --> G
+    M[Testes dbt] --> G
     M --> I
 ```
 
-Simplified flow:
+Fluxo simplificado:
 
 ```text
 TMDB API
@@ -88,18 +88,18 @@ dbt
 Gold
 ```
 
-Apache Airflow orchestrates the complete pipeline.
+O Apache Airflow é responsável por orquestrar o pipeline completo.
 
 ---
 
-## 🛠️ Tech Stack
+# 🛠️ Tecnologias
 
-### Programming
+## Linguagens
 
 - Python
 - SQL
 
-### Data Engineering
+## Engenharia de Dados
 
 - PostgreSQL
 - dbt Core
@@ -107,38 +107,38 @@ Apache Airflow orchestrates the complete pipeline.
 - psycopg
 - Requests
 
-### Infrastructure
+## Infraestrutura
 
 - Docker
 - Docker Compose
 - Linux / Ubuntu
 
-### Testing
+## Testes
 
 - pytest
-- dbt data tests
+- dbt Tests
 - monkeypatch
 - tmp_path
 
-### Development
+## Desenvolvimento
 
 - Git
 - GitHub
 - VS Code
-- Python virtual environments
+- Python Virtual Environment
 
-### Data Source
+## Fonte de Dados
 
 - TMDB API
 
 ---
 
-# 🔄 Data Pipeline
+# 🔄 Pipeline de Dados
 
-The pipeline follows a layered architecture.
+O projeto utiliza uma arquitetura dividida em camadas:
 
 ```text
-Source
+Fonte
   ↓
 Bronze
   ↓
@@ -149,17 +149,17 @@ Silver
 Gold
 ```
 
-Each layer has a different responsibility.
+Cada camada possui uma responsabilidade diferente.
 
 ---
 
-## 🥉 Bronze Layer
+# 🥉 Camada Bronze
 
-The Bronze layer stores the original JSON responses returned by the TMDB API.
+A camada Bronze armazena as respostas originais recebidas da API do TMDB.
 
-No business transformation is applied at this stage.
+Os dados são mantidos em JSON praticamente sem transformação.
 
-Example structure:
+Estrutura:
 
 ```text
 data/
@@ -173,15 +173,21 @@ data/
                 └── metadata.json
 ```
 
-Each execution receives a unique `load_id`.
+Cada execução recebe um `load_id` único.
 
-This allows different ingestion runs to remain isolated and traceable.
+Isso permite identificar e rastrear diferentes cargas executadas pelo pipeline.
 
-### Load Metadata
+---
 
-Each load contains a `metadata.json` file with execution information.
+## 📋 Metadata das Cargas
 
-Example:
+Cada execução gera um arquivo:
+
+```text
+metadata.json
+```
+
+Exemplo:
 
 ```json
 {
@@ -197,7 +203,7 @@ Example:
 }
 ```
 
-Possible execution statuses:
+Possíveis estados:
 
 ```text
 RUNNING
@@ -207,15 +213,15 @@ INTERRUPTED
 FAILED
 ```
 
-This provides basic observability and execution tracking for the ingestion process.
+Isso permite acompanhar o resultado de cada execução.
 
 ---
 
-# 🎬 TMDB Ingestion
+# 🎬 Extração da API TMDB
 
-The TMDB client is responsible for communicating with the external API.
+O módulo `tmdb_client.py` é responsável pela comunicação com a API.
 
-Main functions include:
+Principais funções:
 
 ```python
 get_movie(movie_id)
@@ -223,45 +229,49 @@ get_popular_movies(page)
 get_popular_movie_ids(limit)
 ```
 
-The pipeline first discovers movie IDs through the TMDB popular movies endpoint.
+Primeiro são consultados os filmes populares:
 
 ```text
 /movie/popular
 ```
 
-The returned movie IDs are then used to request detailed information individually.
+A resposta contém os IDs dos filmes.
+
+Depois cada ID é utilizado para buscar os detalhes:
 
 ```text
 /movie/{movie_id}
 ```
 
-Flow:
+Fluxo:
 
 ```text
 TMDB Popular Movies
         ↓
-Movie IDs
+IDs dos filmes
         ↓
-Individual Movie Requests
+Busca individual
         ↓
-Raw JSON Files
+JSON completo
+        ↓
+Bronze
 ```
 
 ---
 
-## 🗃️ Staging Layer
+# 🗃️ Camada Staging
 
-The Staging layer is hosted in PostgreSQL.
+Depois da Bronze, os JSONs são carregados no PostgreSQL.
 
-The main table is:
+Tabela principal:
 
 ```text
 staging.movies
 ```
 
-The purpose of Staging is to convert raw JSON data into a structured relational format while keeping the data close to its original source.
+A Staging transforma os arquivos JSON em uma estrutura tabular, mas mantém os dados próximos da fonte original.
 
-Current columns include:
+Campos utilizados:
 
 ```text
 id
@@ -275,9 +285,7 @@ adult
 original_language
 ```
 
-The loading process is handled in Python using `psycopg`.
-
-Flow:
+A carga é feita através do Python utilizando `psycopg`.
 
 ```text
 Bronze JSON
@@ -291,71 +299,71 @@ staging.movies
 
 ---
 
-## ♻️ Idempotent Loading
+# ♻️ Idempotência
 
-The Staging load uses PostgreSQL conflict handling:
+A carga utiliza:
 
 ```sql
 ON CONFLICT (id) DO NOTHING
 ```
 
-This prevents duplicated movie IDs from breaking repeated pipeline executions.
+Isso evita que filmes já existentes causem erro durante uma nova execução.
 
-Example:
+Exemplo:
 
 ```text
-Movie already exists
-        ↓
-Conflict detected
-        ↓
-Record ignored
-        ↓
-Pipeline continues
+Filme já existe
+      ↓
+Conflito no ID
+      ↓
+Registro ignorado
+      ↓
+Pipeline continua
 ```
 
-This allows the pipeline to be safely executed multiple times.
+Dessa forma, o pipeline pode ser executado novamente sem quebrar devido a registros duplicados.
 
 ---
 
-# 🥈 Silver Layer
+# 🥈 Camada Silver
 
-The Silver layer is managed by dbt.
+A camada Silver é construída utilizando dbt.
 
-Main model:
+Modelo principal:
 
 ```text
 silver.movies
 ```
 
-The Silver layer is responsible for cleaning and standardizing the Staging data.
+Nessa etapa os dados são limpos e padronizados.
 
-Current transformations include:
+Transformações utilizadas:
 
-- Removing unnecessary whitespace from titles
-- Normalizing language codes
-- Extracting release year
-- Validating movie ratings
-- Standardizing fields for downstream analytics
+- Remoção de espaços desnecessários
+- Padronização de idioma
+- Criação do ano de lançamento
+- Validação das notas dos filmes
+- Padronização dos campos
 
-Example:
+Exemplo:
 
 ```sql
 TRIM(title)
 ```
 
-Language normalization:
+Normalização de idioma:
 
 ```sql
 LOWER(original_language)
 ```
 
-Release year extraction:
+Criação do ano:
 
 ```sql
 EXTRACT(YEAR FROM release_date)
 ```
 
-Rating validation:
+Validação da avaliação:
 
 ```sql
 CASE
@@ -366,11 +374,11 @@ END
 
 ---
 
-# 🥇 Gold Layer
+# 🥇 Camada Gold
 
-The Gold layer contains models designed for analytics and business consumption.
+A camada Gold contém os modelos preparados para análise.
 
-Current models include:
+Modelos atuais:
 
 ```text
 gold.dim_movies
@@ -382,9 +390,9 @@ gold.movies_by_year
 
 ## 🎞️ dim_movies
 
-Movie dimension containing descriptive attributes.
+Dimensão contendo informações descritivas dos filmes.
 
-Example fields:
+Campos:
 
 ```text
 movie_id
@@ -396,19 +404,19 @@ release_year
 adult
 ```
 
-Grain:
+Grão:
 
 ```text
-1 row = 1 movie
+1 linha = 1 filme
 ```
 
 ---
 
 ## 📊 fct_movie_metrics
 
-Fact table containing movie metrics.
+Tabela de fatos contendo métricas dos filmes.
 
-Example fields:
+Campos:
 
 ```text
 movie_id
@@ -417,13 +425,13 @@ vote_average
 vote_count
 ```
 
-Grain:
+Grão:
 
 ```text
-1 row = metrics for 1 movie
+1 linha = métricas de 1 filme
 ```
 
-The fact table is connected to `dim_movies` through:
+A ligação com a dimensão é feita através de:
 
 ```text
 movie_id
@@ -433,9 +441,9 @@ movie_id
 
 ## 📈 movies_by_year
 
-Analytical model aggregating movie metrics by release year.
+Modelo analítico que agrupa informações por ano de lançamento.
 
-Metrics include:
+Métricas:
 
 ```text
 release_year
@@ -445,16 +453,16 @@ avg_popularity
 total_votes
 ```
 
-Example analytical questions that can be answered:
+Esse modelo permite responder perguntas como:
 
-- How many movies were released each year?
-- What is the average rating by year?
-- How has movie popularity changed over time?
-- How many votes were recorded for movies released in each year?
+- Quantos filmes foram lançados por ano?
+- Qual a avaliação média dos filmes por ano?
+- Qual a popularidade média?
+- Quantos votos os filmes receberam?
 
 ---
 
-# 🧱 Data Model
+# 🧱 Modelagem
 
 ```mermaid
 erDiagram
@@ -480,103 +488,101 @@ erDiagram
 
 ---
 
-# 🧪 Data Quality
+# 🧪 Qualidade de Dados com dbt
 
-Data quality checks are implemented with dbt.
+O dbt é utilizado também para validar a qualidade dos dados.
 
-Current tests include:
+Testes implementados:
 
-### Movie ID
+## ID do filme
 
 ```text
 NOT NULL
 UNIQUE
 ```
 
-### Title
+## Título
 
 ```text
 NOT NULL
 ```
 
-### Original Language
+## Idioma original
 
 ```text
 NOT NULL
 ```
 
-### Fact / Dimension Relationship
+## Relacionamento entre fato e dimensão
 
-Every `movie_id` in:
+Todo `movie_id` presente em:
 
 ```text
 gold.fct_movie_metrics
 ```
 
-must exist in:
+deve existir em:
 
 ```text
 gold.dim_movies
 ```
 
-This ensures referential integrity between the analytical models.
+Isso ajuda a garantir integridade entre os modelos do Data Warehouse.
 
 ---
 
-# 🧪 Python Testing
+# 🧪 Testes Python
 
-Python components are tested with pytest.
+O projeto utiliza `pytest` para testar componentes Python.
 
-Current testing covers:
+Os testes verificam:
 
-- Movie extraction
-- Batch extraction
-- Bronze file creation
-- Metadata generation
-- Successful loads
-- Partial failures
-- API mocking
-- Temporary file systems
+- Extração de filmes
+- Extração em lote
+- Criação dos arquivos Bronze
+- Criação de metadata
+- Execuções com sucesso
+- Falhas parciais
+- Respostas simuladas da API
+- Escrita em diretórios temporários
 
 ---
 
-## Mocked API Responses
+## Monkeypatch
 
-`monkeypatch` is used to replace real API calls during unit tests.
-
-Example concept:
+O `monkeypatch` é utilizado para substituir chamadas reais da API por respostas falsas durante os testes.
 
 ```text
-Real TMDB Request
-       ↓
+TMDB real
+   ↓
 monkeypatch
-       ↓
-Fake API Response
+   ↓
+Resposta fake
 ```
 
-This allows tests to run without depending on the external TMDB API.
+Isso permite testar o código sem depender da internet ou da disponibilidade da API.
 
 ---
 
-## Temporary Files
+## tmp_path
 
-pytest's `tmp_path` fixture is used to create temporary directories during extraction tests.
+O `tmp_path` do pytest cria diretórios temporários para os testes.
 
-This prevents automated tests from writing files into the real Bronze layer.
+Dessa forma os testes não gravam arquivos dentro da Bronze real do projeto.
 
 ---
 
 # 🌬️ Apache Airflow
 
-Apache Airflow orchestrates the complete pipeline.
+O Apache Airflow é responsável pela orquestração do pipeline.
 
-Current DAG:
+DAG:
 
 ```text
 movie_dw_pipeline
 ```
 
-Pipeline tasks:
+Fluxo:
 
 ```text
 extract_tmdb
@@ -588,58 +594,78 @@ dbt_run
 dbt_test
 ```
 
-### Task Responsibilities
+---
 
-`extract_tmdb`
+## extract_tmdb
 
-```text
-TMDB API → Bronze JSON
-```
-
-`load_staging`
+Responsável por:
 
 ```text
-Bronze JSON → PostgreSQL Staging
+TMDB API
+↓
+Bronze JSON
 ```
 
-`dbt_run`
+---
+
+## load_staging
+
+Responsável por:
 
 ```text
-Staging → Silver → Gold
+Bronze
+↓
+PostgreSQL Staging
 ```
 
-`dbt_test`
+---
+
+## dbt_run
+
+Executa as transformações:
 
 ```text
-Run data quality validations
+Staging
+↓
+Silver
+↓
+Gold
 ```
 
-Airflow provides:
+---
 
-- Pipeline orchestration
-- Task dependency management
-- Execution history
-- Task status monitoring
+## dbt_test
+
+Executa os testes de qualidade dos modelos dbt.
+
+---
+
+O Airflow permite acompanhar:
+
+- Execuções do pipeline
+- Status das tarefas
 - Logs
-- Manual pipeline execution
-- Retry capabilities
+- Dependências entre tarefas
+- Histórico
+- Falhas
+- Novas tentativas
 
-The Airflow interface allows each pipeline execution to be visually monitored.
+O DAG também possui configuração de retry para lidar com falhas temporárias.
 
 ---
 
 # 🐳 Docker
 
-PostgreSQL runs inside a Docker container.
+O PostgreSQL é executado em um container Docker.
 
-Current local architecture:
+Arquitetura local:
 
 ```text
 Ubuntu
 │
 ├── VS Code
 │
-├── Python Project
+├── Projeto Python
 │   └── .venv
 │
 ├── dbt Core
@@ -650,21 +676,19 @@ Ubuntu
     └── PostgreSQL
 ```
 
-The PostgreSQL container exposes:
+O PostgreSQL utiliza:
 
 ```text
 localhost:5432
 ```
 
-The application connects to PostgreSQL using environment variables.
-
 ---
 
-# 🔐 Environment Variables
+# 🔐 Variáveis de Ambiente
 
-Sensitive configuration is stored in `.env`.
+Informações sensíveis ficam armazenadas no `.env`.
 
-Example:
+Exemplo:
 
 ```env
 TMDB_API_TOKEN=
@@ -676,19 +700,25 @@ POSTGRES_USER=
 POSTGRES_PASSWORD=
 ```
 
-The `.env` file is excluded from Git through `.gitignore`.
+O arquivo real:
 
-A safe template is provided through:
+```text
+.env
+```
+
+não é enviado para o GitHub.
+
+O repositório possui apenas:
 
 ```text
 .env.example
 ```
 
-No API tokens or database passwords are committed to the repository.
+sem credenciais reais.
 
 ---
 
-# 📁 Project Structure
+# 📁 Estrutura do Projeto
 
 ```text
 movie-data-warehouse/
@@ -707,6 +737,7 @@ movie-data-warehouse/
 │   ├── analyses/
 │   ├── macros/
 │   │   └── generate_schema_name.sql
+│   │
 │   ├── models/
 │   │   ├── sources.yml
 │   │   │
@@ -747,9 +778,9 @@ movie-data-warehouse/
 
 ---
 
-# ⚙️ Setup
+# ⚙️ Configuração do Projeto
 
-## 1. Clone the repository
+## 1. Clonar o repositório
 
 ```bash
 git clone https://github.com/pedro-ramoss/movie-data-warehouse.git
@@ -758,7 +789,7 @@ cd movie-data-warehouse
 
 ---
 
-## 2. Create the Python environment
+## 2. Criar o ambiente Python
 
 ```bash
 python3 -m venv .venv
@@ -767,7 +798,7 @@ source .venv/bin/activate
 
 ---
 
-## 3. Install dependencies
+## 3. Instalar as dependências
 
 ```bash
 pip install -r requirements.txt
@@ -775,15 +806,15 @@ pip install -r requirements.txt
 
 ---
 
-## 4. Configure environment variables
+## 4. Configurar o `.env`
 
-Create:
+Crie:
 
 ```text
 .env
 ```
 
-based on:
+baseado no:
 
 ```text
 .env.example
@@ -803,13 +834,13 @@ POSTGRES_PASSWORD=
 
 ---
 
-## 5. Start PostgreSQL
+## 5. Iniciar PostgreSQL
 
 ```bash
 docker compose up -d
 ```
 
-Verify:
+Verifique:
 
 ```bash
 docker ps
@@ -817,9 +848,9 @@ docker ps
 
 ---
 
-# 🚀 Running the Pipeline Manually
+# 🚀 Executando Manualmente
 
-## Extract TMDB data
+## Extração TMDB
 
 ```bash
 PYTHONPATH=src python -m movie_dw.extract
@@ -827,7 +858,7 @@ PYTHONPATH=src python -m movie_dw.extract
 
 ---
 
-## Load Staging
+## Carregar Staging
 
 ```bash
 PYTHONPATH=src python -m movie_dw.load_staging
@@ -835,7 +866,7 @@ PYTHONPATH=src python -m movie_dw.load_staging
 
 ---
 
-## Run dbt transformations
+## Executar dbt
 
 ```bash
 cd movie_dw_dbt
@@ -844,7 +875,7 @@ dbt run
 
 ---
 
-## Run dbt tests
+## Executar testes dbt
 
 ```bash
 dbt test
@@ -852,15 +883,15 @@ dbt test
 
 ---
 
-# 🧪 Running Python Tests
+# 🧪 Executando Testes Python
 
-From the project root:
+Na raiz do projeto:
 
 ```bash
 pytest -v
 ```
 
-Example successful result:
+Exemplo:
 
 ```text
 test_extract_movies PASSED
@@ -871,84 +902,84 @@ test_get_popular_movie_ids_mock PASSED
 
 ---
 
-# 🌬️ Running with Airflow
+# 🌬️ Executando com Airflow
 
-Activate the Airflow environment:
+Ative o ambiente do Airflow:
 
 ```bash
 source ~/airflow-venv/bin/activate
 ```
 
-Start Airflow:
+Inicie:
 
 ```bash
 airflow standalone
 ```
 
-Open:
+Abra no navegador:
 
 ```text
 http://localhost:8080
 ```
 
-Locate:
+Procure pelo DAG:
 
 ```text
 movie_dw_pipeline
 ```
 
-The DAG executes:
+O Airflow executará:
 
 ```text
 TMDB API
-    ↓
+↓
 Bronze
-    ↓
+↓
 Staging
-    ↓
+↓
 Silver
-    ↓
+↓
 Gold
-    ↓
-Data Tests
+↓
+Testes
 ```
 
 ---
 
-# 🔎 Useful Commands
+# 🔎 Comandos Úteis
 
-### Check PostgreSQL container
+## Ver containers
 
 ```bash
 docker ps
 ```
 
-### Enter PostgreSQL
+## Entrar no PostgreSQL
 
 ```bash
-docker exec -it movie_dw_postgres psql -U <user> -d movie_dw
+docker exec -it movie_dw_postgres psql -U <usuario> -d movie_dw
 ```
 
-### Run dbt
+## Executar dbt
 
 ```bash
 cd movie_dw_dbt
 dbt run
 ```
 
-### Run dbt tests
+## Testar dbt
 
 ```bash
 dbt test
 ```
 
-### Run Python tests
+## Executar pytest
 
 ```bash
 pytest -v
 ```
 
-### Check Git status
+## Ver alterações do Git
 
 ```bash
 git status
@@ -956,7 +987,7 @@ git status
 
 ---
 
-# 📊 Example Analytical Query
+# 📊 Exemplo de Consulta Analítica
 
 ```sql
 SELECT
@@ -969,93 +1000,92 @@ FROM gold.movies_by_year
 ORDER BY release_year;
 ```
 
-This query consumes a Gold model already prepared for analytics.
+Essa consulta utiliza dados que já foram preparados pela camada Gold.
 
 ---
 
-# 🎯 Engineering Concepts Applied
-
-This project applies several Data Engineering concepts in practice:
+# 🎯 Conceitos Aplicados
 
 ```text
 API Ingestion
 Batch Processing
 ELT
-Bronze / Silver / Gold Architecture
+Bronze / Silver / Gold
 PostgreSQL
-Data Modeling
-Dimensional Modeling
+Data Warehouse
+Modelagem Dimensional
 Data Quality
-Metadata Tracking
-Failure Handling
-Idempotency
-Pipeline Orchestration
-Automated Testing
-Containerization
-Environment Variables
-Version Control
+Metadata
+Tratamento de Falhas
+Idempotência
+Orquestração
+Testes Automatizados
+Docker
+Variáveis de Ambiente
+Git
+GitHub
 ```
 
 ---
 
-# 🔄 Complete Data Flow
+# 🔄 Fluxo Completo
 
 ```text
-                  ┌──────────────┐
-                  │   TMDB API   │
-                  └──────┬───────┘
-                         │
-                         ▼
-                  ┌──────────────┐
-                  │    Python    │
-                  │   Requests   │
-                  └──────┬───────┘
-                         │
-                         ▼
-                  ┌──────────────┐
-                  │    Bronze    │
-                  │   Raw JSON   │
-                  └──────┬───────┘
-                         │
-                         ▼
-                  ┌──────────────┐
-                  │   psycopg    │
-                  └──────┬───────┘
-                         │
-                         ▼
-                  ┌──────────────┐
-                  │   Staging    │
-                  │  PostgreSQL  │
-                  └──────┬───────┘
-                         │
-                         ▼
-                  ┌──────────────┐
-                  │     dbt      │
-                  └──────┬───────┘
-                         │
-                         ▼
-                  ┌──────────────┐
-                  │    Silver    │
-                  │ Cleaned Data │
-                  └──────┬───────┘
-                         │
-                         ▼
-                  ┌──────────────┐
-                  │     Gold     │
-                  │  Analytics   │
-                  └──────────────┘
+                   ┌──────────────┐
+                   │   TMDB API   │
+                   └──────┬───────┘
+                          │
+                          ▼
+                   ┌──────────────┐
+                   │    Python    │
+                   │   Requests   │
+                   └──────┬───────┘
+                          │
+                          ▼
+                   ┌──────────────┐
+                   │    Bronze    │
+                   │  JSON Bruto  │
+                   └──────┬───────┘
+                          │
+                          ▼
+                   ┌──────────────┐
+                   │   psycopg    │
+                   └──────┬───────┘
+                          │
+                          ▼
+                   ┌──────────────┐
+                   │   Staging    │
+                   │  PostgreSQL  │
+                   └──────┬───────┘
+                          │
+                          ▼
+                   ┌──────────────┐
+                   │     dbt      │
+                   └──────┬───────┘
+                          │
+                          ▼
+                   ┌──────────────┐
+                   │    Silver    │
+                   │ Dados Limpos │
+                   └──────┬───────┘
+                          │
+                          ▼
+                   ┌──────────────┐
+                   │     Gold     │
+                   │  Analytics   │
+                   └──────────────┘
 
-             Apache Airflow orchestrates
-               the complete workflow
+              Apache Airflow orquestra
+                 todo o pipeline
 ```
 
 ---
 
-## 👨‍💻 Author
+# 👨‍💻 Autor
 
 **Pedro Henrique**
 
-Data Engineering • Python • SQL • Data & AI
+Engenharia de Dados • Python • SQL • Dados & IA
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Pedro_Henrique-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pedro-ramoss/)
 
