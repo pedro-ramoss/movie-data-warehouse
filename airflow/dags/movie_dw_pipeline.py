@@ -1,6 +1,6 @@
 import os
 import subprocess
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from airflow.sdk import dag, task
 
 PROJECT_ROOT = "/home/pedro/movie-data-warehouse"
@@ -12,8 +12,10 @@ DBT = f"{PROJECT_ROOT}/.venv/bin/dbt"
     schedule=None,
     start_date=datetime(2026, 10, 3, tzinfo=timezone.utc),
     catchup=False,
+    default_args={"retries": 2, "retry_delay": timedelta(minutes=1)},
     tags=["movie_dw"]
 )
+
 def movie_dw_pipeline():
 
     @task
