@@ -108,3 +108,51 @@ Runtime Error
 [0m20:11:56.105421 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f9393477100>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f93933cbe30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f9393304270>]}
 [0m20:11:56.105758 [debug] [MainThread]: Flushing usage events
 [0m20:11:58.860988 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m20:25:25.781196 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a526b65de80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a526d4a0910>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a5269e53890>]}
+
+
+============================== 20:25:25.783833 | c4247fd3-fb74-44ef-b791-014e8e51f2bd ==============================
+[0m20:25:25.783833 [info ] [MainThread]: Running with dbt=1.12.5
+[0m20:25:25.784308 [debug] [MainThread]: running dbt with arguments {'log_cache_events': 'False', 'static_parser': 'True', 'fail_fast': 'False', 'log_format': 'default', 'use_colors': 'True', 'write_json': 'True', 'printer_width': '80', 'hints_enabled': 'True', 'indirect_selection': 'eager', 'no_print': 'None', 'invocation_command': 'dbt run', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'use_experimental_parser': 'False', 'debug': 'False', 'quiet': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/home/pedro/.dbt', 'maximum_seed_size_mib': '1', 'empty': 'False', 'introspect': 'True', 'log_path': 'logs', 'send_anonymous_usage_stats': 'True', 'warn_error': 'None', 'version_check': 'True', 'target_path': 'None'}
+[0m20:25:25.784756 [error] [MainThread]: [[31mERROR[0m]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/pedro/movie-data-warehouse/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m20:25:25.785562 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.0830447, "process_in_blocks": "0", "process_kernel_time": 0.070948, "process_mem_max_rss": "118852", "process_out_blocks": "8", "process_user_time": 1.209125}
+[0m20:25:25.785993 [debug] [MainThread]: Command `dbt run` failed at 20:25:25.785901 after 0.08 seconds
+[0m20:25:25.786334 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a526a087100>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a5269fdbe30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a5269f14270>]}
+[0m20:25:25.786693 [debug] [MainThread]: Flushing usage events
+[0m20:25:28.831426 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m20:25:37.988175 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x78c918259e80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x78c91a0ac910>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x78c916a4f890>]}
+
+
+============================== 20:25:37.991020 | a3e40f0c-4c38-4313-b1ac-b6546d19b215 ==============================
+[0m20:25:37.991020 [info ] [MainThread]: Running with dbt=1.12.5
+[0m20:25:37.991506 [debug] [MainThread]: running dbt with arguments {'use_colors': 'True', 'printer_width': '80', 'invocation_command': 'dbt run', 'quiet': 'False', 'log_path': 'logs', 'log_cache_events': 'False', 'static_parser': 'True', 'cache_selected_only': 'False', 'introspect': 'True', 'warn_error': 'None', 'maximum_seed_size_mib': '1', 'indirect_selection': 'eager', 'version_check': 'True', 'target_path': 'None', 'profiles_dir': '/home/pedro/.dbt', 'use_experimental_parser': 'False', 'partial_parse': 'True', 'no_print': 'None', 'log_format': 'default', 'write_json': 'True', 'fail_fast': 'False', 'hints_enabled': 'True', 'send_anonymous_usage_stats': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'empty': 'False', 'debug': 'False'}
+[0m20:25:37.991977 [error] [MainThread]: [[31mERROR[0m]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/pedro/movie-data-warehouse/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m20:25:37.992856 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.08327787, "process_in_blocks": "0", "process_kernel_time": 0.079967, "process_mem_max_rss": "118820", "process_out_blocks": "0", "process_user_time": 1.215507}
+[0m20:25:37.993506 [debug] [MainThread]: Command `dbt run` failed at 20:25:37.993389 after 0.08 seconds
+[0m20:25:37.993860 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x78c916c83100>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x78c916bd7e30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x78c916b10270>]}
+[0m20:25:37.994228 [debug] [MainThread]: Flushing usage events
+[0m20:25:40.680629 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m20:25:42.284848 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f922fd4de80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f9231b4ca50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f922e543890>]}
+
+
+============================== 20:25:42.287697 | 66034e7b-c26f-4ca4-b902-7fa3a2c4fd36 ==============================
+[0m20:25:42.287697 [info ] [MainThread]: Running with dbt=1.12.5
+[0m20:25:42.288202 [debug] [MainThread]: running dbt with arguments {'debug': 'False', 'log_format': 'default', 'maximum_seed_size_mib': '1', 'cache_selected_only': 'False', 'printer_width': '80', 'log_cache_events': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'warn_error': 'None', 'profiles_dir': '/home/pedro/.dbt', 'version_check': 'True', 'send_anonymous_usage_stats': 'True', 'use_colors': 'True', 'no_print': 'None', 'partial_parse': 'True', 'use_experimental_parser': 'False', 'indirect_selection': 'eager', 'fail_fast': 'False', 'log_path': 'logs', 'introspect': 'True', 'invocation_command': 'dbt test', 'write_json': 'True', 'quiet': 'False', 'hints_enabled': 'True', 'empty': 'None', 'static_parser': 'True', 'target_path': 'None'}
+[0m20:25:42.288692 [error] [MainThread]: [[31mERROR[0m]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/pedro/movie-data-warehouse/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m20:25:42.289470 [debug] [MainThread]: Resource report: {"command_name": "test", "command_success": false, "command_wall_clock_time": 0.08386758, "process_in_blocks": "0", "process_kernel_time": 0.069, "process_mem_max_rss": "118952", "process_out_blocks": "8", "process_user_time": 1.197012}
+[0m20:25:42.289887 [debug] [MainThread]: Command `dbt test` failed at 20:25:42.289795 after 0.08 seconds
+[0m20:25:42.290212 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f922e777100>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f922e6cbe30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f922e604270>]}
+[0m20:25:42.290543 [debug] [MainThread]: Flushing usage events
+[0m20:25:44.452108 [debug] [MainThread]: An error was encountered while trying to flush usage events
